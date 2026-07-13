@@ -8,39 +8,181 @@
       name="description"
       content="Análise detalhada da linha do tempo e personagens da saga Metal Gear."
     />
-    <!-- Arquivos CSS separados. Mantive o link original (index.css). -->
     <link rel="stylesheet" href="index.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"
+        }
+      }
+    </script>
   </head>
 
   <body>
-    <!-- Skip link para acessibilidade: permite que usuários de teclado pulem para o conteúdo principal -->
+    <!-- SVG Page Transition Overlay -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true">
+      <svg viewBox="0 0 100 100" class="transition-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="revealClip">
+            <polygon points="50,0 100,0 100,100 50,100 50,50 0,50 0,0" />
+          </clipPath>
+          <linearGradient id="transGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e11d48" />
+            <stop offset="100%" stop-color="#0a0a0a" />
+          </linearGradient>
+        </defs>
+        <!-- Camada preta -->
+        <rect width="100" height="100" fill="#0a0a0a" />
+        <!-- Forma de revelação -->
+        <polygon
+          class="trans-poly"
+          points="50,0 100,0 100,100 50,100 50,50 0,50 0,0"
+          fill="url(#transGrad)"
+        />
+        <!-- Linhas de varredura (Codec style) -->
+        <line
+          class="scan-line"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.5"
+          opacity="0.6"
+        />
+        <line
+          class="scan-line"
+          x1="20"
+          y1="0"
+          x2="20"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.3"
+          opacity="0.3"
+        />
+        <line
+          class="scan-line"
+          x1="40"
+          y1="0"
+          x2="40"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.3"
+          opacity="0.3"
+        />
+        <line
+          class="scan-line"
+          x1="60"
+          y1="0"
+          x2="60"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.5"
+          opacity="0.6"
+        />
+        <line
+          class="scan-line"
+          x1="80"
+          y1="0"
+          x2="80"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.3"
+          opacity="0.3"
+        />
+        <line
+          class="scan-line"
+          x1="100"
+          y1="0"
+          x2="100"
+          y2="100"
+          stroke="#e11d48"
+          stroke-width="0.5"
+          opacity="0.6"
+        />
+        <!-- Linha horizontal varredura -->
+        <line
+          class="scan-line"
+          x1="0"
+          y1="50"
+          x2="100"
+          y2="50"
+          stroke="#e11d48"
+          stroke-width="0.5"
+          opacity="0.4"
+        />
+        <!-- Texto "TRANSMISSÃO" -->
+        <text
+          class="trans-text"
+          x="50"
+          y="48"
+          text-anchor="middle"
+          fill="#facc15"
+          font-size="4"
+          font-weight="bold"
+          letter-spacing="3"
+        >
+          TRANSMISSÃO
+        </text>
+        <text
+          class="trans-text"
+          x="50"
+          y="54"
+          text-anchor="middle"
+          fill="#f8fafc"
+          font-size="3"
+          letter-spacing="2"
+        >
+          CODIFICANDO SINAL
+        </text>
+        <!-- Círculo radar -->
+        <circle
+          class="radar-circle"
+          cx="50"
+          cy="50"
+          r="8"
+          fill="none"
+          stroke="#e11d48"
+          stroke-width="0.3"
+        />
+        <circle
+          class="radar-circle"
+          cx="50"
+          cy="50"
+          r="16"
+          fill="none"
+          stroke="#e11d48"
+          stroke-width="0.2"
+        />
+        <circle
+          class="radar-circle"
+          cx="50"
+          cy="50"
+          r="24"
+          fill="none"
+          stroke="#e11d48"
+          stroke-width="0.1"
+        />
+      </svg>
+    </div>
+
     <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
-    <!-- Top bar: avisos do sistema. Comentários explicam comportamentos esperados (ex: animação tipo "marquee"). -->
+    <!-- Top bar com marquee animado via CSS; JS duplica o conteúdo para loop contínuo -->
     <div class="top-bar" role="complementary" aria-label="Alertas do sistema">
-      <!--
-      .marquee
-      - Conteúdo rolante. Em vez da tag <marquee> (obsoleta), usa-se animação CSS no container .marquee-track.
-      - Repetir mensagens para preencher a pista; use JS para clonar quando variável.
-    -->
       <div class="marquee">
         <div class="marquee-track">
-          <span class="alert">⚠ ALERTA</span>
-          <span>Sistema FOXHOUND ativo — Arquivos classificados detectados —</span>
-
           <span class="alert">⚠ ALERTA</span>
           <span>Sistema FOXHOUND ativo — Arquivos classificados detectados —</span>
         </div>
       </div>
     </div>
 
-    <!-- Cabeçalho principal com navegação -->
     <header class="main-header">
       <nav class="navbar" aria-label="Navegação Principal" role="navigation">
-        <!-- Logo + título do site. Link para home. -->
         <div class="logo-container">
           <a href="index.html" class="logo-link">
-            <!-- Imagem do ícone do site. width/height preservam layout; alt descritivo para acessibilidade. -->
             <img
               src="src/assets/images/icons/snake-icon.webp"
               alt="Logo Metal Gear Saga"
@@ -52,18 +194,17 @@
           </a>
         </div>
 
-        <!-- Links de navegação principais. IDs/anchors devem existir nas seções correspondentes. -->
         <ul class="nav-links">
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#personagens">Personagens</a></li>
-          <li><a href="#organizacoes">Organizações</a></li>
-          <li><a href="#metal-gears">Metal Gears</a></li>
+          <li><a href="#inicio" data-section="inicio">Início</a></li>
+          <li><a href="#idroid3d" data-section="idroid3d">iDroid 3D</a></li>
+          <li><a href="#venom3d" data-section="venom3d">Venom Army</a></li>
+          <li><a href="#personagens" data-section="personagens">Personagens</a></li>
+          <li><a href="#organizacoes" data-section="organizacoes">Organizações</a></li>
+          <li><a href="#metal-gears" data-section="metal-gears">Metal Gears</a></li>
         </ul>
 
-        <!-- Ações da navbar (busca e botão do projeto). Form acessível com role=search e label. -->
         <div class="nav-actions">
           <form class="search-bar" role="search" aria-label="Pesquisar no site">
-            <!-- input type=search para comportamento nativo; placeholder e aria-label mantidos. -->
             <input
               type="search"
               name="q"
@@ -71,37 +212,24 @@
               aria-label="Pesquisar conteúdo"
             />
             <button type="submit" aria-label="Buscar">
-              <!-- Ícone SVG para buscar. Sem texto visual, então aria-label no botão é necessário. -->
-              <svg
+              <img
+                src="src/assets/images/icons/idroid-recorted.webp"
+                alt="Buscar"
+                class="search-icon"
                 width="18"
                 height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
+              />
             </button>
           </form>
-          <a href="#projeto" class="btn-project">Projeto</a>
+          <a href="#organizacoes" data-section="organizacoes" class="btn-project">Projeto</a>
         </div>
       </nav>
     </header>
 
-    <!-- Conteúdo principal do documento -->
     <main id="main-content">
-      <!-- HERO: bloco de destaque. Use <picture> para imagens responsivas ou versões WebP/AVIF. -->
       <section class="hero" id="inicio" aria-label="Destaque principal">
-        <!-- Slider simples: estrutura HTML preparada para ser controlada por script.js -->
         <div class="hero-slider" aria-live="polite">
-          <!-- Cada .slide representa um frame do carrossel. "active" indica o slide visível. -->
           <div class="slide active">
-            <!-- Recomendo trocar para <picture> com fontes otimizadas em produção. -->
             <img
               class="hero-fixed"
               src="src/assets/images/hero/solid-snake-rage.webp"
@@ -121,7 +249,6 @@
           </div>
 
           <div class="slide">
-            <!-- Imagem externa: mantenha cautela com hotlink. Preferível baixar e servir localmente. -->
             <img
               src="src/assets/images/hero/jack-snake.webp"
               alt="Jack Snake"
@@ -131,10 +258,7 @@
           </div>
         </div>
 
-        <!-- Camada escura sobre a imagem para melhorar legibilidade do texto -->
         <div class="hero-overlay" aria-hidden="true"></div>
-
-        <!-- Texto principal do hero. Use heading único h1 na página. -->
 
         <div class="hero-text">
           <p class="tactical-text">TACTICAL ESPIONAGE ACTION</p>
@@ -143,7 +267,36 @@
         </div>
       </section>
 
-      <!-- GALLERY: seção de personagens com rolagem horizontal acessível -->
+      <!-- Seção iDroid 3D Three.js com scroll parallax -->
+      <section class="idroid-3d-section" id="idroid3d" aria-label="iDroid 3D">
+        <div class="idroid-3d-inner">
+          <div class="idroid-text-side">
+            <div class="idroid-text-content">
+              <h2>iDROID <span class="accent">3D</span></h2>
+              <p class="idroid-subtitle">
+                Sistema de Interface Tática<br />
+                <span class="text-muted">FOXHOUND — Criptografia de Ponta</span>
+              </p>
+              <div class="idroid-description">
+                <p>
+                  O iDroid é um dispositivo de comunicação e navegação utilizado por agentes da
+                  FOXHOUND em campo.
+                </p>
+                <ul class="idroid-features">
+                  <li><span class="accent">▸</span> Transmissão Codec</li>
+                  <li><span class="accent">▸</span> Mapeamento 3D</li>
+                  <li><span class="accent">▸</span> Criptografia Militar</li>
+                  <li><span class="accent">▸</span> Modo Furtivo</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="idroid-3d-side">
+            <div class="div3d" id="div3d"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="gallery-section" id="personagens" aria-labelledby="personagens-title">
         <div class="container">
           <div class="gallery-header">
@@ -151,13 +304,7 @@
             <p>Dados biográficos extraídos dos arquivos da FOXHOUND.</p>
           </div>
 
-          <!--
-          .horizontal-scroll
-          - Contêiner rolável horizontalmente. tabindex="0" torna acessível via teclado.
-          - Considere adicionar controles (prev/next) e atributos ARIA para um carrossel mais robusto.
-        -->
           <div class="horizontal-scroll" tabindex="0">
-            <!-- CARD: padrão reutilizável para cada personagem -->
             <article class="card">
               <img
                 src="src/assets/images/gallery/big-boss.webp"
@@ -230,9 +377,146 @@
           </div>
         </div>
       </section>
+
+      <!-- Seção Venom Snake Army 3D (3D à esquerda, texto à direita) -->
+      <section class="venom-3d-section" id="venom3d" aria-label="Venom Snake Army 3D">
+        <div class="venom-3d-inner">
+          <div class="venom-3d-side">
+            <div class="div3d-venom" id="div3dVenom"></div>
+          </div>
+          <div class="venom-text-side">
+            <div class="venom-text-content">
+              <h2>VENOM SNAKE <span class="accent">ARMY</span></h2>
+              <p class="venom-subtitle">
+                Exército de Diamond Dogs<br />
+                <span class="text-muted">Mother Base — Forças Táticas</span>
+              </p>
+              <div class="venom-description">
+                <p>
+                  Sob o comando de Venom Snake, os Diamond Dogs se tornaram uma das forças militares
+                  privadas mais temidas do mundo.
+                </p>
+                <ul class="venom-features">
+                  <li><span class="accent">▸</span> Força Tática Mobile</li>
+                  <li><span class="accent">▸</span> Suporte Aéreo</li>
+                  <li><span class="accent">▸</span> Infiltração Furtiva</li>
+                  <li><span class="accent">▸</span> Base Offshore</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Organizações -->
+      <section class="gallery-section" id="organizacoes" aria-labelledby="organizacoes-title">
+        <div class="container">
+          <div class="gallery-header">
+            <h2 id="organizacoes-title">Organizações</h2>
+            <p>Entidades e grupos que moldaram o conflito.</p>
+          </div>
+          <div class="horizontal-scroll" tabindex="0">
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/idroid-recorted.webp"
+                alt="FOXHOUND"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>FOXHOUND</h3>
+                <p>Unidade de forças especiais de elite dos EUA.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/snake-icon.webp"
+                alt="Outer Heaven"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Outer Heaven</h3>
+                <p>Nação-fortaleza criada por Big Boss.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/idroid-recorted.webp"
+                alt="Philanthropy"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Philanthropy</h3>
+                <p>ONG anti-Metal Gear fundada por Solid Snake e Otacon.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img src="src/assets/images/icons/snake-icon.webp" alt="Patriots" loading="lazy" />
+              <div class="card-content">
+                <h3>Patriots</h3>
+                <p>Sociedade secreta que controla os EUA.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Metal Gears -->
+      <section class="gallery-section" id="metal-gears" aria-labelledby="metal-gears-title">
+        <div class="container">
+          <div class="gallery-header">
+            <h2 id="metal-gears-title">Metal Gears</h2>
+            <p>As armas bipedais que ameaçaram o mundo.</p>
+          </div>
+          <div class="horizontal-scroll" tabindex="0">
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/snake-icon.webp"
+                alt="Metal Gear REX"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Metal Gear REX</h3>
+                <p>Protótipo equipado com lançador nuclear railgun.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/idroid-recorted.webp"
+                alt="Metal Gear RAY"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Metal Gear RAY</h3>
+                <p>Unidade antiprotótipo desenvolvida pela Marine.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/snake-icon.webp"
+                alt="Metal Gear ZEKE"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Metal Gear ZEKE</h3>
+                <p>Primeiro Metal Gear completo construído pela MSF.</p>
+              </div>
+            </article>
+            <article class="card card-icon">
+              <img
+                src="src/assets/images/icons/idroid-recorted.webp"
+                alt="Metal Gear SAHELANTHROPUS"
+                loading="lazy"
+              />
+              <div class="card-content">
+                <h3>Metal Gear SAHELANTHROPUS</h3>
+                <p>Máquina de guerra da XOF com capacidade de nuvem de metais.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- Rodapé com informações adicionais -->
     <footer class="main-footer" role="contentinfo">
       <div class="container footer-grid">
         <div class="footer-section">
@@ -260,7 +544,8 @@
       </div>
     </footer>
 
-    <!-- Script principal: manter comportamento do carrossel, acessibilidade extra e interações. -->
+    <script type="module" src="idroid-3d.js"></script>
+    <script type="module" src="venom-3d.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

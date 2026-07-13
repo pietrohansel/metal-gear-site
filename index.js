@@ -1,62 +1,35 @@
 /**
- * =========================================================
- * METAL GEAR SAGA
- * Scripts de Interface
- * =========================================================
+ * Metal Gear Saga - Scripts de Interface
  */
 
 document.addEventListener('DOMContentLoaded', init)
-
-/* =========================================================
-   FUNÇÃO PRINCIPAL
-   Inicializa todos os módulos da página
-========================================================= */
 
 function init() {
   initHeroSlider()
   initSmoothScroll()
   initConsoleMessage()
   initMarqueeFix()
+  initGalleryScroll()
+  initPageTransition()
 }
 
-/* =========================================================
-   FIX MARQUEE LOOP (TOP BAR)
-   Evita bug e cria loop infinito
-========================================================= */
-
+/** Duplica conteúdo do marquee para loop infinito */
 function initMarqueeFix() {
   const track = document.querySelector('.marquee-track')
-
-  if (!track) return
-
-  // impede duplicação caso o script rode novamente
-  if (track.dataset.duplicated) return
-
-  const content = track.innerHTML
-
-  // duplica o conteúdo para loop contínuo
-  track.innerHTML += content
-
-  // marca como duplicado
+  if (!track || track.dataset.duplicated) return
+  track.innerHTML += track.innerHTML
   track.dataset.duplicated = 'true'
 }
 
-/* =========================================================
-   HERO SLIDER
-   Controle automático das imagens do cabeçalho
-========================================================= */
-
+/** Slider automático do hero */
 function initHeroSlider() {
   const SLIDE_INTERVAL = 8000
-
   const slides = document.querySelectorAll('.slide')
   let currentSlide = 0
 
   function nextSlide() {
     slides[currentSlide].classList.remove('active')
-
     currentSlide = (currentSlide + 1) % slides.length
-
     slides[currentSlide].classList.add('active')
   }
 
@@ -65,37 +38,63 @@ function initHeroSlider() {
   }
 }
 
-/* =========================================================
-   SMOOTH SCROLL
-   Rolagem suave para links internos
-========================================================= */
-
+/** Rolagem suave com transição Codec */
 function initSmoothScroll() {
-  const anchors = document.querySelectorAll('a[href^="#"]')
-
-  anchors.forEach((anchor) => {
-    anchor.addEventListener('click', function (event) {
-      event.preventDefault()
-
-      const targetId = this.getAttribute('href')
-      const targetElement = document.querySelector(targetId)
-
-      if (!targetElement) return
-
-      targetElement.scrollIntoView({
-        behavior: 'smooth',
-      })
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault()
+      const target = document.querySelector(this.getAttribute('href'))
+      if (!target) return
+      transitionTo(target)
     })
   })
 }
 
-/* =========================================================
-   CONSOLE MESSAGE
-========================================================= */
+/** Transição SVG estilo Codec */
+function transitionTo(target) {
+  const overlay = document.getElementById('pageTransition')
+  if (!overlay) {
+    target.scrollIntoView({ behavior: 'smooth' })
+    return
+  }
 
+  overlay.classList.add('active')
+
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'instant' })
+  }, 400)
+
+  setTimeout(() => {
+    overlay.classList.remove('active')
+  }, 1200)
+}
+
+/** Transforma cada .horizontal-scroll em carrossel com loop automático */
+function initGalleryScroll() {
+  document.querySelectorAll('.horizontal-scroll').forEach((container) => {
+    const track = document.createElement('div')
+    track.className = 'scroll-track'
+    track.innerHTML = container.innerHTML + container.innerHTML
+    container.innerHTML = ''
+    container.appendChild(track)
+    container.classList.add('scrolling')
+  })
+}
+
+/** Mensagem no console */
 function initConsoleMessage() {
   console.log(
     '%c[SISTEMA iDROID]: Conexão estabelecida. Arquivos da Saga carregados.',
     'color:#e11d48;font-weight:bold;font-size:12px;'
   )
+}
+
+/** Transition fade-in ao carregar a página */
+function initPageTransition() {
+  const overlay = document.getElementById('pageTransition')
+  if (!overlay) return
+  overlay.classList.add('active')
+  setTimeout(() => {
+    overlay.classList.remove('active')
+  }, 800)
 }
