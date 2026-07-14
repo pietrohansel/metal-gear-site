@@ -17,10 +17,10 @@ if (!container) throw new Error('#div3d not found')
 // Para deixar PARADO, use o mesmo valor em start e end.
 // =========================================================
 const MODEL_ANIMATION = {
-  startPosition: new THREE.Vector3(-5, -3, 0),
-  endPosition: new THREE.Vector3(-3, 0, 0),
-  startRotation: new THREE.Euler(0, 0, 0),
-  endRotation: new THREE.Euler(0, 0, 0),
+  startPosition: new THREE.Vector3(-5, -3, 2),
+  endPosition: new THREE.Vector3(-3, 0, -3),
+  startRotation: new THREE.Euler(2, 0, 0),
+  endRotation: new THREE.Euler(-2, 1, 0),
   size: 6.0,
 }
 

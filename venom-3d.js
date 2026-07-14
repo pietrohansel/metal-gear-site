@@ -17,10 +17,10 @@ if (!container) throw new Error('#div3dVenom not found')
 // Para deixar PARADO, use o mesmo valor em start e end.
 // =========================================================
 const MODEL_ANIMATION = {
-  startPosition: new THREE.Vector3(0.0, -4, 0),
-  endPosition: new THREE.Vector3(-0.8, -0.4, 0),
-  startRotation: new THREE.Euler(0, 0, 0),
-  endRotation: new THREE.Euler(0, 0, 0),
+  startPosition: new THREE.Vector3(-5, -4, 2),
+  endPosition: new THREE.Vector3(3, -1, 0),
+  startRotation: new THREE.Euler(-2, 0, 2),
+  endRotation: new THREE.Euler(2, 1, -2),
   size: 6.0,
 }
 
