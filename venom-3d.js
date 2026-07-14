@@ -54,11 +54,14 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1.5
 container.appendChild(renderer.domElement)
 
-// Controles Orbit — desabilitado auto-rotate
+// Controles Orbit — desabilitado auto-rotate e interação do usuário
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.dampingFactor = 0.08
 controls.autoRotate = false
+controls.enableZoom = false
+controls.enablePan = false
+controls.enableRotate = false
 controls.minDistance = 3
 controls.maxDistance = 15
 controls.target.set(0, 0, 0)
