@@ -11,7 +11,7 @@ A aplicação organiza **eventos, personagens e momentos importantes da franquia
 > ⚠️ **Projeto não afiliado à Konami.**
 
 🔗 Veja o projeto online:
-https://pietrohansel.github.io/metal-gear-saga/
+https://pietrohansel.github.io/metal-gear-site/
 
 ---
 
