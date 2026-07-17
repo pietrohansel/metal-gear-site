@@ -5,37 +5,9 @@
 document.addEventListener('DOMContentLoaded', init)
 
 function init() {
-  initHeroSlider()
   initSmoothScroll()
   initConsoleMessage()
-  initMarqueeFix()
   initGalleryScroll()
-  initPageTransition()
-}
-
-/** Duplica conteúdo do marquee para loop infinito */
-function initMarqueeFix() {
-  const track = document.querySelector('.marquee-track')
-  if (!track || track.dataset.duplicated) return
-  track.innerHTML += track.innerHTML
-  track.dataset.duplicated = 'true'
-}
-
-/** Slider automático do hero */
-function initHeroSlider() {
-  const SLIDE_INTERVAL = 8000
-  const slides = document.querySelectorAll('.slide')
-  let currentSlide = 0
-
-  function nextSlide() {
-    slides[currentSlide].classList.remove('active')
-    currentSlide = (currentSlide + 1) % slides.length
-    slides[currentSlide].classList.add('active')
-  }
-
-  if (slides.length > 0) {
-    setInterval(nextSlide, SLIDE_INTERVAL)
-  }
 }
 
 /** Rolagem suave com transição Codec */
@@ -45,28 +17,8 @@ function initSmoothScroll() {
       e.preventDefault()
       const target = document.querySelector(this.getAttribute('href'))
       if (!target) return
-      transitionTo(target)
     })
   })
-}
-
-/** Transição SVG estilo Codec */
-function transitionTo(target) {
-  const overlay = document.getElementById('pageTransition')
-  if (!overlay) {
-    target.scrollIntoView({ behavior: 'smooth' })
-    return
-  }
-
-  overlay.classList.add('active')
-
-  setTimeout(() => {
-    target.scrollIntoView({ behavior: 'instant' })
-  }, 400)
-
-  setTimeout(() => {
-    overlay.classList.remove('active')
-  }, 1200)
 }
 
 /** Transforma cada .horizontal-scroll em carrossel com loop automático */
@@ -89,12 +41,28 @@ function initConsoleMessage() {
   )
 }
 
-/** Transition fade-in ao carregar a página */
-function initPageTransition() {
-  const overlay = document.getElementById('pageTransition')
-  if (!overlay) return
-  overlay.classList.add('active')
-  setTimeout(() => {
-    overlay.classList.remove('active')
-  }, 800)
+// preloader
+
+const preloader = document.getElementById('preloader')
+const numbersEl = document.getElementById('numbers')
+
+function randomDigits(n) {
+  let s = ''
+  for (let i = 0; i < n; i++) s += Math.floor(Math.random() * 10)
+  return s
 }
+
+const numbersInterval = setInterval(() => {
+  numbersEl.textContent = randomDigits(4)
+}, 90)
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    preloader.classList.add('loaded')
+
+    setTimeout(() => {
+      clearInterval(numbersInterval)
+      preloader.classList.add('hidden')
+    }, 900)
+  }, 500)
+})

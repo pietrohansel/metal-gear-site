@@ -29,6 +29,13 @@
   --text-muted: #94a3b8;
 
   --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Variáveis do preloader */
+  --preloader-bg: #000000;
+  --preloader-glow-white: rgba(255, 255, 255, 0.45);
+  --preloader-glow-gold: rgba(242, 193, 78, 0.6);
+  --preloader-gold: #f2c14e;
+  --preloader-white: #ffffff;
 }
 
 /* =========================================================
@@ -61,103 +68,6 @@ body {
 }
 
 /* =========================================================
-   3. SVG PAGE TRANSITION
-   ========================================================= */
-
-.page-transition {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.page-transition.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.transition-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.trans-poly {
-  animation: transReveal 0.8s ease-in-out forwards;
-  transform-origin: center;
-}
-
-.scan-line {
-  animation: scanPulse 0.6s ease-in-out infinite alternate;
-}
-
-.trans-text {
-  animation: textFlicker 0.1s ease-in-out infinite alternate;
-}
-
-.radar-circle {
-  animation: radarPulse 1.5s ease-in-out infinite;
-}
-
-.radar-circle:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.radar-circle:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-@keyframes transReveal {
-  0% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scanPulse {
-  from {
-    opacity: 0.2;
-  }
-  to {
-    opacity: 0.8;
-  }
-}
-
-@keyframes textFlicker {
-  from {
-    opacity: 0.7;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes radarPulse {
-  0% {
-    opacity: 0.1;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.1;
-    transform: scale(0.8);
-  }
-}
-
-/* =========================================================
    4. ACESSIBILIDADE
    ========================================================= */
 
@@ -183,92 +93,6 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
-}
-
-/* =========================================================
-   TOP BAR - HUD ALERT SYSTEM
-   ========================================================= */
-
-.top-bar {
-  position: relative;
-
-  background: #0f1111;
-  color: #e4e4e4;
-
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-
-  overflow: hidden;
-
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* SCANLINE EFFECT */
-
-.top-bar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0.02) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-
-  pointer-events: none;
-}
-
-/* MARQUEE CONTAINER */
-
-.marquee {
-  width: 100%;
-  overflow: hidden;
-}
-
-/* SCROLL TRACK */
-
-.marquee-track {
-  display: flex;
-  gap: 3rem;
-
-  width: max-content;
-
-  white-space: nowrap;
-
-  animation: marquee 25s linear infinite;
-
-  will-change: transform;
-}
-
-/* TEXTO */
-
-.marquee-track span {
-  display: inline-block;
-}
-
-/* ALERT TEXT */
-
-.alert {
-  color: var(--primary-color);
-  font-weight: 700;
-
-  animation: blinkAlert 1.2s infinite;
-}
-
-/* PAUSE HOVER */
-
-.top-bar:hover .marquee-track {
-  animation-play-state: paused;
 }
 
 /* =========================================================
@@ -317,6 +141,15 @@ body {
 .site-title {
   font-size: 1.2rem;
   letter-spacing: 1px;
+  transition: var(--transition-smooth);
+}
+
+.site-title:hover strong {
+  color: var(--primary-color);
+}
+
+.site-title strong {
+  transition: var(--transition-smooth);
 }
 
 /* LINKS */
@@ -349,48 +182,6 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-/* SEARCH */
-
-.search-bar {
-  display: flex;
-
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-
-  padding: 4px 8px;
-}
-
-.search-bar input {
-  background: transparent;
-  border: none;
-  color: white;
-
-  padding: 4px;
-  outline: none;
-
-  width: 120px;
-}
-
-.search-bar button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-icon {
-  display: block;
-  filter: brightness(0.7);
-  transition: filter 0.3s;
-}
-
-.search-bar button:hover .search-icon {
-  filter: brightness(1);
 }
 
 /* BOTÃO PROJETO */
@@ -636,34 +427,15 @@ body {
   overflow: hidden;
 }
 
-/* SLIDER */
+/* IMAGEM HERO ESTÁTICA */
 
-.hero-slider,
-.slide {
+.hero-image {
   position: absolute;
   inset: 0;
 
   width: 100%;
   height: 100%;
-}
-
-.slide {
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-}
-
-.slide.active {
-  opacity: 1;
-}
-
-/* IMAGENS DO HERO */
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  display: block;
   object-fit: cover;
-  animation: subtleZoom 10s infinite alternate;
 }
 
 /* OVERLAY */
@@ -731,6 +503,9 @@ body {
 
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) transparent;
+
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .horizontal-scroll.scrolling {
@@ -793,7 +568,8 @@ body {
 }
 
 .card-icon img {
-  aspect-ratio: 16/9;
+  aspect-ratio: 1/1;
+  object-fit: contain;
   padding: 1rem;
   background: #0f1111;
 }
@@ -889,8 +665,7 @@ body {
    ========================================================= */
 
 @media (max-width: 992px) {
-  .nav-links,
-  .search-bar {
+  .nav-links {
     display: none;
   }
 
@@ -960,15 +735,6 @@ body {
   }
 }
 
-@keyframes subtleZoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-
 @keyframes scrollLoop {
   from {
     transform: translateX(0);
@@ -987,26 +753,204 @@ body {
   }
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
+/* =========================================================
+   PRELOADER
+   ========================================================= */
 
+#preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--preloader-bg);
+  z-index: 9999;
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease;
+}
+
+#preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+/* ===== Palco: anel externo + anel principal + números ===== */
+.loader-stage {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+/* --- Anel externo fino, dividido em duas partes, girando ao redor --- */
+.ring-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: spin-reverse 3.4s linear infinite;
+}
+
+.ring-outer-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--oc) 0deg 150deg,
+    transparent 150deg 180deg,
+    var(--oc) 180deg 330deg,
+    transparent 330deg 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  transition: opacity 0.9s ease;
+}
+
+.ring-outer-layer.white {
+  --oc: var(--preloader-white);
+  opacity: 0.55;
+}
+.ring-outer-layer.gold {
+  --oc: var(--preloader-gold);
+  opacity: 0;
+}
+
+/* --- Anel principal: degradê que se funde ao preto, sem costura --- */
+.ring-main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translate(-50%, -50%);
+}
+
+.ring-main-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--rc) 0%, transparent 65%, var(--rc) 100%);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 11px),
+    #000 calc(100% - 11px)
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 11px), #000 calc(100% - 11px));
+  animation: spin 1s linear infinite;
+  transition: opacity 0.9s ease;
+}
+
+.ring-main-layer.white {
+  --rc: var(--preloader-white);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--preloader-glow-white));
+}
+
+.ring-main-layer.gold {
+  --rc: var(--preloader-gold);
+  opacity: 0;
+  filter: drop-shadow(0 0 8px var(--preloader-glow-gold));
+}
+
+#preloader.loaded .ring-main-layer.white,
+#preloader.loaded .ring-outer-layer.white {
+  opacity: 0;
+}
+
+#preloader.loaded .ring-main-layer.gold {
+  opacity: 1;
+}
+
+#preloader.loaded .ring-outer-layer.gold {
+  opacity: 0.6;
+}
+
+@keyframes spin {
   to {
-    transform: translateX(-50%);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes blinkAlert {
+@keyframes spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* --- Números oscilando, canto inferior esquerdo do círculo --- */
+.numbers {
+  position: absolute;
+  left: -6px;
+  bottom: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--preloader-white);
+  opacity: 0.55;
+  transition:
+    color 0.9s ease,
+    opacity 0.9s ease;
+}
+
+#preloader.loaded .numbers {
+  color: var(--preloader-gold);
+  opacity: 0.9;
+}
+
+/* ===== Texto / status ===== */
+.loader-label {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
+  font-size: 13px;
+  color: var(--preloader-white);
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: color 0.9s ease;
+}
+
+#preloader.loaded .loader-label {
+  color: var(--preloader-gold);
+}
+
+.loader-label .dots::after {
+  content: '';
+  animation: dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes dots {
   0% {
-    opacity: 1;
+    content: '';
   }
-
+  25% {
+    content: '.';
+  }
   50% {
-    opacity: 0.4;
+    content: '..';
   }
-
+  75% {
+    content: '...';
+  }
   100% {
-    opacity: 1;
+    content: '';
+  }
+}
+
+/* Respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .ring-main-layer,
+  .ring-outer {
+    animation: none;
+  }
+  .loader-label .dots::after {
+    animation: none;
+    content: '...';
   }
 }
