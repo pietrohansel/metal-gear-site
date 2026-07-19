@@ -66,3 +66,28 @@ window.addEventListener('load', () => {
     }, 900)
   }, 500)
 })
+
+const wrapper = document.getElementById('wrapper')
+const track = document.getElementById('track')
+
+function updateScroll() {
+  const wrapperRect = wrapper.getBoundingClientRect()
+  const wrapperHeight = wrapper.offsetHeight
+  const viewportHeight = window.innerHeight
+
+  // distância total que o wrapper "percorre" atrás do sticky
+  const scrollableDistance = wrapperHeight - viewportHeight
+
+  // progresso de 0 a 1 baseado em quanto do wrapper já passou
+  let progress = -wrapperRect.top / scrollableDistance
+  progress = Math.min(Math.max(progress, 0), 1)
+
+  // quanto o track precisa andar para a esquerda no total
+  const maxTranslate = track.scrollWidth - window.innerWidth
+
+  track.style.transform = `translateX(-${progress * maxTranslate}px)`
+}
+
+window.addEventListener('scroll', updateScroll)
+window.addEventListener('resize', updateScroll)
+updateScroll()

@@ -954,3 +954,325 @@ body {
     content: '...';
   }
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: -apple-system, sans-serif;
+  background: #0e0e10;
+  color: #fff;
+}
+
+section.intro,
+section.outro {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #666;
+}
+
+/* 1. Wrapper alto: define a "distância" de scroll disponível */
+.horizontal-wrapper {
+  position: relative;
+  height: 650vh;
+}
+
+/* 2. Container sticky: gruda na tela enquanto o wrapper é rolado */
+.horizontal-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #05100a; /* verde escuro tático */
+}
+
+/* Grid tático animado no fundo */
+.horizontal-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(80, 255, 140, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 255, 140, 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridDrift 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes gridDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 40px;
+  }
+}
+
+/* Scanlines (efeito CRT sutil) por cima do grid */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 3. Trilho horizontal: uma única fileira, alternando grupos de
+      imagens e blocos de texto — a trajetória vem do margin-top de
+      cada grupo/texto, formando uma linha que sobe e desce */
+.track {
+  position: relative;
+  z-index: 2; /* fica acima do grid e das scanlines */
+  display: flex;
+  align-items: flex-start;
+  gap: 52px;
+  padding: 0 5vw;
+  will-change: transform;
+}
+
+/* 4. Grupo: agrupa 1, 2 ou 3 imagens lado a lado (11 grupos no total) */
+.cluster {
+  display: flex;
+  gap: 18px;
+}
+
+.gallery-item {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.gallery-item .label {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #cfcfc0;
+}
+
+/* 4b. Wrapper "vidro" — agora é um link (<a>), então reseta o estilo padrão */
+.img-wrap {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.img-wrap:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 40px rgba(80, 255, 140, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.img-wrap img {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Faixa de brilho: fica escondida por padrão, só aparece no hover */
+.img-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.img-wrap:hover::before {
+  animation: shine 0.9s ease forwards;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* pequena variação interna: dentro de um grupo com 2+ imagens, a
+   segunda sobe/desce um pouco, reforçando a sensação de trajetória */
+.cluster .gallery-item:nth-child(2) {
+  margin-top: 45px;
+}
+.cluster .gallery-item:nth-child(3) {
+  margin-top: -25px;
+}
+
+/* 5. Bloco de texto entre grupos */
+.text-block {
+  width: 240px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.text-block .label {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #cfcfc0;
+}
+
+.text-block .quote {
+  font-size: 1.15rem;
+  font-family: Georgia, serif;
+  line-height: 1.4;
+  color: #f0efe6;
+}
+
+.text-block .signature {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #cfcfc0;
+  font-style: italic;
+}
+
+/* 6. Trajetória: cada um dos 11 grupos (g1–g11) e 11 textos (t1–t11)
+      tem seu próprio margin-top, formando uma onda ao longo do trilho */
+.g1 {
+  margin-top: 30px;
+}
+.t1 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g2 {
+  margin-top: 170px;
+}
+.t2 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g3 {
+  margin-top: 20px;
+}
+.t3 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g4 {
+  margin-top: 140px;
+}
+.t4 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g5 {
+  margin-top: 40px;
+}
+.t5 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g6 {
+  margin-top: 100px;
+}
+.t6 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g7 {
+  margin-top: 60px;
+}
+.t7 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g8 {
+  margin-top: 130px;
+}
+.t8 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g9 {
+  margin-top: 10px;
+}
+.t9 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g10 {
+  margin-top: 80px;
+}
+.t10 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+.g11 {
+  margin-top: 120px;
+}
+.t11 .quote {
+  margin-top: 1px;
+  font-size: 1rem;
+}
+
+/* Corrige o espaço vazio da imagem 14 (1ª imagem do g8) */
+.g8 .gallery-item:nth-child(1) img {
+  height: auto;
+}
+.g8 .gallery-item:nth-child(1) {
+  gap: 2px;
+}
+
+/* Deixa os labels de g9 e g10 em uma única linha */
+.g9 .gallery-item:nth-child(1) .label,
+.g10 .gallery-item:nth-child(1) .label {
+  white-space: nowrap;
+  font-size: 10px;
+}
