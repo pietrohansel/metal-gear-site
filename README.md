@@ -4,23 +4,23 @@ Projeto de desenvolvimento web focado na evolução para **Full Stack**, apresen
 
 A aplicação organiza **eventos, personagens e momentos importantes da franquia** em uma interface estruturada, funcionando como um **laboratório prático** para consolidação de habilidades em:
 
-* Desenvolvimento Web
-* Arquitetura de Frontend
-* Estruturação de projetos
+- Desenvolvimento Web
+- Arquitetura de Frontend
+- Estruturação de projetos
 
 > ⚠️ **Projeto não afiliado à Konami.**
 
 🔗 Veja o projeto online:
-https://pietrohansel.github.io/metal-gear-saga/
+https://pietrohansel.github.io/metal-gear-site/
 
 ---
 
 # 📚 Conteúdo
 
-* [Preview](#-preview)
-* [Primeiras ideias](#-primeiras-ideias)
-* [Tecnologias](#-tecnologias)
-* [Status do projeto](#-status-do-projeto)
+- [Preview](#-preview)
+- [Primeiras ideias](#-primeiras-ideias)
+- [Tecnologias](#-tecnologias)
+- [Status do projeto](#-status-do-projeto)
 
 ---
 
@@ -44,10 +44,10 @@ Layout inicial desenvolvido no **Figma**, usado como base para estruturar a inte
 
 Este projeto utiliza principalmente:
 
-* HTML
-* CSS
-* JavaScript
-* Figma (prototipação)
+- HTML
+- CSS
+- JavaScript
+- Figma (prototipação)
 
 ---
 
@@ -57,7 +57,7 @@ Este projeto utiliza principalmente:
 
 Próximas etapas incluem:
 
-* Expansão da linha do tempo da saga
-* Melhor organização dos personagens
-* Melhorias visuais na interface
-* Evolução para arquitetura Full Stack
+- Expansão da linha do tempo da saga
+- Melhor organização dos personagens
+- Melhorias visuais na interface
+- Evolução para arquitetura Full Stack
