@@ -8,7 +8,8 @@
       name="description"
       content="Análise detalhada da linha do tempo e personagens da saga Metal Gear."
     />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="sytyle.css" />
+    <link rel="stylesheet" href="src/components/DriftWall/DriftWall.css" />
     <script type="importmap">
       {
         "imports": {
@@ -59,66 +60,88 @@
         </div>
 
         <ul class="nav-links">
-          <li><a href="#inicio" data-section="inicio">Início</a></li>
-          <li><a href="#idroid3d" data-section="idroid3d">iDroid 3D</a></li>
-          <li><a href="#venom3d" data-section="venom3d">Venom Army</a></li>
-          <li><a href="#personagens" data-section="personagens">Personagens</a></li>
-          <li><a href="#organizacoes" data-section="organizacoes">Organizações</a></li>
+          <li><a href="#Início" data-section="inicio">Início</a></li>
+          <li><a href="#História" data-section="idroid3d">História</a></li>
+          <li><a href="#Linha do Tempo" data-section="venom3d">Linha do Tempo</a></li>
+          <li><a href="#Jogos" data-section="personagens">Jogos</a></li>
+          <li><a href="#Personagens" data-section="organizacoes">Personagens</a></li>
+          <li><a href="#Metal Gears" data-section="organizacoes">Metal Gears</a></li>
+          <li><a href="#Organizações" data-section="organizacoes">Organizações</a></li>
         </ul>
 
         <div class="nav-actions">
-          <a href="#organizacoes" data-section="organizacoes" class="btn-project">Projeto</a>
+          <div class="switch" title="Alternar tema claro/escuro">
+            <input id="theme-toggle" type="checkbox" />
+            <label class="toggle" for="theme-toggle">
+              <i></i>
+            </label>
+          </div>
         </div>
       </nav>
     </header>
 
     <main id="main-content">
-      <section class="hero" id="inicio" aria-label="Destaque principal">
-        <img
-          src="src/assets/images/hero/snake-with-fox.webp"
-          alt="Snake ao horizonte junto a uma raposa"
-          class="hero-image"
-          width="1920"
-          height="1080"
-        />
-        <div class="hero-overlay" aria-hidden="true"></div>
+      <!-- O hero fica preso somente enquanto a História sobe sobre ele. -->
+      <div class="hero-story-stage">
+        <section class="hero" id="inicio" aria-label="Destaque principal">
+          <div
+            id="hero-drift-wall"
+            class="hero-drift-wall"
+            aria-label="Mural animado de imagens"
+          ></div>
+          <img
+            src="src/assets/images/hero/snake-with-fox.webp"
+            alt="Snake ao horizonte junto a uma raposa"
+            class="hero-image"
+            width="1920"
+            height="1080"
+          />
+          <div class="hero-overlay" aria-hidden="true"></div>
 
-        <div class="hero-text">
-          <p class="tactical-text">TACTICAL ESPIONAGE ACTION</p>
-          <h1>Metal Gear Saga</h1>
-          <p>Uma análise cronológica completa da franquia</p>
-        </div>
-      </section>
+          <div class="hero-text">
+            <p class="tactical-text">TACTICAL ESPIONAGE ACTION</p>
+            <h1>Metal Gear Saga</h1>
+            <a class="hero-start" href="#idroid3d" aria-live="polite">
+              Clique em <span>START</span></a
+            >
+          </div>
+          <p class="hero-disclaimer">Site independente, sem ligação oficial com a Konami.</p>
+        </section>
 
-      <!-- Seção iDroid 3D Three.js com scroll parallax -->
-      <section class="idroid-3d-section" id="idroid3d" aria-label="iDroid 3D">
-        <div class="idroid-3d-inner">
-          <div class="idroid-text-side">
-            <div class="idroid-text-content">
-              <h2>iDROID <span class="accent">3D</span></h2>
-              <p class="idroid-subtitle">
-                Sistema de Interface Tática<br />
-                <span class="text-muted">FOXHOUND — Criptografia de Ponta</span>
-              </p>
-              <div class="idroid-description">
-                <p>
-                  O iDroid é um dispositivo de comunicação e navegação utilizado por agentes da
-                  FOXHOUND em campo.
+        <!-- Seção iDroid 3D Three.js com scroll parallax -->
+        <section class="idroid-3d-section" id="idroid3d" aria-label="iDroid 3D">
+          <div class="idroid-3d-inner">
+            <div class="idroid-text-side">
+              <div class="idroid-text-content">
+                <h2>Historia<span class="accent"></span></h2>
+                <p class="idroid-subtitle">
+                  O início<br />
+                  <span class="text-muted">FOXHOUND — Criptografia de Ponta</span>
                 </p>
-                <ul class="idroid-features">
-                  <li><span class="accent">▸</span> Transmissão Codec</li>
-                  <li><span class="accent">▸</span> Mapeamento 3D</li>
-                  <li><span class="accent">▸</span> Criptografia Militar</li>
-                  <li><span class="accent">▸</span> Modo Furtivo</li>
-                </ul>
+                <div class="idroid-description">
+                  <p>
+                    Metal Gear é uma série de jogos de ação e espionagem criada por Hideo Kojima.
+                    Lançada em 1987, a franquia revolucionou os jogos de stealth ao incentivar o
+                    jogador a evitar confrontos diretos, utilizando estratégia, infiltração e
+                    inteligência. Além da jogabilidade inovadora, a série é conhecida por sua
+                    narrativa complexa, personagens marcantes e temas como guerra, política,
+                    tecnologia e genética.
+                  </p>
+                  <ul class="idroid-features">
+                    <li><span class="accent">▸</span> Transmissão Codec</li>
+                    <li><span class="accent">▸</span> Mapeamento 3D</li>
+                    <li><span class="accent">▸</span> Criptografia Militar</li>
+                    <li><span class="accent">▸</span> Modo Furtivo</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="idroid-3d-side">
+              <div class="div3d" id="div3d"></div>
+            </div>
           </div>
-          <div class="idroid-3d-side">
-            <div class="div3d" id="div3d"></div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section class="gallery-section" id="personagens" aria-labelledby="personagens-title">
         <div class="container">
@@ -231,7 +254,7 @@
         </div>
       </section>
     </main>
-
+    <!-- Linha do tempo -->
     <div class="horizontal-wrapper" id="wrapper">
       <div class="horizontal-sticky">
         <div class="scanlines"></div>
@@ -686,6 +709,8 @@
 
     <script type="module" src="idroid-3d.js"></script>
     <script type="module" src="venom-3d.js"></script>
+    <script src="src/components/DriftWall/DriftWall.js"></script>
     <script src="index.js"></script>
+    <script src="theme-toggle.js"></script>
   </body>
 </html>

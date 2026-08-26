@@ -24,6 +24,8 @@
   --bg-dark: #0a0a0a;
   --bg-card: #161616;
   --nav-bg: rgba(10, 10, 10, 0.95);
+  --content-background: #0e0e10;
+  --timeline-background: #05100a;
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -36,6 +38,39 @@
   --preloader-glow-gold: rgba(242, 193, 78, 0.6);
   --preloader-gold: #f2c14e;
   --preloader-white: #ffffff;
+}
+
+/* =========================================================
+   TEMA CLARO
+   Ativado via [data-theme="light"] no <html>, controlado pelo
+   switch no JS (index.js)
+   ========================================================= */
+
+html[data-theme='light'] {
+  --bg-dark: #f4f4f5;
+  --bg-card: #ffffff;
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --content-background: #f4f4f5;
+  --timeline-background: #15301f;
+
+  --text-main: #0a0a0a;
+  --text-muted: #52525b;
+}
+
+html[data-theme='light'] .hero-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), var(--bg-dark));
+}
+
+html[data-theme='light'] .card {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme='light'] .card-icon img {
+  background: #eaeaea;
+}
+
+html[data-theme='light'] .main-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
 /* =========================================================
@@ -61,7 +96,7 @@ body {
     Roboto,
     sans-serif;
 
-  background-color: var(--bg-dark);
+  background-color: var(--content-background);
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
@@ -184,26 +219,109 @@ body {
   gap: 1rem;
 }
 
-/* BOTÃO PROJETO */
+/* SWITCH DE TEMA (claro/escuro) — baseado em Uiverse.io by elijahgummer */
 
-.btn-project {
-  background: var(--primary-color);
-  color: white;
+.switch {
+  position: relative;
+  width: 64px;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 3px;
+  background: #0d0d0d;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1px 1px 1px rgba(0, 0, 0, 0.5),
+    0 1px 0 0 rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
 
-  text-decoration: none;
+.switch input[type='checkbox'] {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
 
-  padding: 8px 16px;
-  border-radius: 4px;
-
-  font-size: 0.85rem;
-  font-weight: 600;
-
+.switch input[type='checkbox'] + label.toggle {
+  position: relative;
+  display: block;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #1b1c1c;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   transition: var(--transition-smooth);
 }
 
-.btn-project:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 15px rgba(225, 29, 72, 0.3);
+.switch input[type='checkbox'] + label.toggle:before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 8px;
+  background: #fff;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-shadow:
+    0 0 5px 2px rgba(225, 29, 72, 0.9),
+    0 0 3px 1px rgba(225, 29, 72, 0.9);
+  transition: var(--transition-smooth);
+}
+
+.switch input[type='checkbox'] + label.toggle:after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.switch input[type='checkbox'] + label.toggle i {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: #0d0d0d;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.switch input[type='checkbox'] + label.toggle i:before,
+.switch input[type='checkbox'] + label.toggle i:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: #0d0d0d;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.switch input[type='checkbox'] + label.toggle i:before {
+  left: -4px;
+}
+
+.switch input[type='checkbox'] + label.toggle i:after {
+  left: 4px;
+}
+
+.switch input[type='checkbox']:checked + label.toggle {
+  left: 50%;
+}
+
+.switch input[type='checkbox']:checked + label.toggle:before {
+  box-shadow:
+    0 0 5px 2px rgba(250, 204, 21, 0.9),
+    0 0 3px 1px rgba(250, 204, 21, 0.9);
 }
 
 /* =========================================================
@@ -213,6 +331,10 @@ body {
 .idroid-3d-section {
   padding: 80px 0;
   position: relative;
+  z-index: 1;
+  background: var(--content-background);
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -24px 48px rgba(0, 0, 0, 0.35);
 }
 
 .idroid-3d-section::before {
@@ -417,14 +539,23 @@ body {
    ========================================================= */
 
 .hero {
-  position: relative;
-  height: 80vh;
+  /* Permanece visível enquanto a seção História passa por cima dele. */
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  isolation: isolate;
+  height: calc(100vh - 73px); /* 73px = altura aproximada do .main-header */
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   overflow: hidden;
+}
+
+/* Limita o sticky ao conjunto hero + História; as seções seguintes rolam normalmente. */
+.hero-story-stage {
+  position: relative;
 }
 
 /* IMAGEM HERO ESTÁTICA */
@@ -436,25 +567,45 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0;
+  display: none;
+}
+
+.hero-drift-wall {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #060010;
+}
+
+/* Preenche cada tile por completo, preservando a proporção da capa. */
+.hero-drift-wall .drift-wall__tile img {
+  object-fit: cover;
+  background: #060010;
+}
+
+.hero-drift-wall .drift-wall__tile {
+  cursor: pointer;
 }
 
 /* OVERLAY */
 
 .hero-overlay {
-  position: absolute;
-  inset: 0;
-
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), var(--bg-dark));
-
-  z-index: 1;
+  display: none;
 }
 
 /* TEXTO HERO */
 
 .hero-text {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
+  display: grid;
+  place-content: center;
+  pointer-events: none;
   text-align: center;
+  color: var(--text-main);
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.9);
 }
 
 .hero-text h1 {
@@ -476,12 +627,86 @@ body {
   text-transform: uppercase;
 }
 
+.hero-start {
+  display: inline-block;
+  margin-top: 0.75rem;
+  pointer-events: auto;
+  color: var(--primary-color);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(0.8rem, 1.4vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  animation: heroStartPulse 1.5s ease-in-out infinite;
+}
+
+.hero-start span {
+  color: #ff385f;
+}
+
+.hero-start:hover,
+.hero-start:focus-visible {
+  color: #fff;
+  outline: none;
+}
+
+@keyframes heroStartPulse {
+  0%,
+  100% {
+    opacity: 0.65;
+    text-shadow: 0 0 0 rgba(225, 29, 72, 0);
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 16px rgba(225, 29, 72, 0.9);
+    transform: scale(1);
+  }
+}
+
+.hero-disclaimer {
+  position: absolute;
+  right: clamp(1rem, 3vw, 3rem);
+  bottom: clamp(1rem, 3vw, 2.5rem);
+  z-index: 2;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(0.45rem, 1vw, 0.65rem);
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-start {
+    animation: none;
+  }
+}
+
 /* =========================================================
    10. GALLERY
    ========================================================= */
 
 .gallery-section {
   padding: 100px 0;
+}
+
+/* As três seções usam a mesma superfície para formar um bloco contínuo. */
+.idroid-3d-section,
+.gallery-section,
+.venom-3d-section {
+  position: relative;
+  background: var(--content-background);
+}
+
+.gallery-section,
+.venom-3d-section {
+  z-index: 1;
 }
 
 .gallery-header {
@@ -674,7 +899,7 @@ body {
   }
 
   .hero {
-    height: 60vh;
+    height: calc(100svh - 73px);
   }
 
   .hero-text h1 {
@@ -701,7 +926,7 @@ body {
 
 @media (max-width: 576px) {
   .hero {
-    height: 50vh;
+    height: calc(100svh - 65px);
   }
 
   .hero-text h1 {
@@ -712,6 +937,10 @@ body {
   .tactical-text {
     letter-spacing: 4px;
     font-size: 10px;
+  }
+
+  .hero-disclaimer {
+    font-size: 0.45rem;
   }
 
   .site-title {
@@ -962,7 +1191,7 @@ body {
 }
 body {
   font-family: -apple-system, sans-serif;
-  background: #0e0e10;
+  background: var(--content-background);
   color: #fff;
 }
 
@@ -980,6 +1209,23 @@ section.outro {
 .horizontal-wrapper {
   position: relative;
   height: 650vh;
+  isolation: isolate;
+  background: var(--content-background);
+}
+
+/*
+   A camada começa opaca com o fundo das seções de conteúdo e perde opacidade
+   até revelar o verde da Linha do Tempo. Assim não há um corte seco entre os
+   dois ambientes visuais.
+*/
+.horizontal-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(28vh, 240px);
+  background: linear-gradient(to bottom, var(--content-background) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 4;
 }
 
 /* 2. Container sticky: gruda na tela enquanto o wrapper é rolado */
@@ -990,7 +1236,22 @@ section.outro {
   overflow: hidden;
   display: flex;
   align-items: center;
-  background: #05100a; /* verde escuro tático */
+  background: var(--timeline-background); /* verde escuro tático */
+}
+
+/* Degradês de entrada (topo) e saída (base): fundem o verde tático
+   com a cor do body. Usa só ::after porque ::before já é ocupado
+   pelo grid tático mais abaixo — duas camadas de gradiente
+   empilhadas no mesmo pseudo-elemento resolvem os dois lados. */
+.horizontal-sticky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, var(--content-background) 0%, transparent 180px),
+    linear-gradient(to top, var(--content-background) 0%, transparent 180px);
+  pointer-events: none;
+  z-index: 3;
 }
 
 /* Grid tático animado no fundo */
