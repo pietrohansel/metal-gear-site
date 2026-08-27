@@ -71,47 +71,47 @@ function initHeroDriftWall() {
 
   const items = [
     {
-      image: 'capas_game/cp1.webp',
+      image: 'src/assets/images/capas_game/cp1.webp',
       title: 'Metal Gear',
     },
     {
-      image: 'capas_game/cp2.webp',
+      image: 'src/assets/images/capas_game/cp2.webp',
       title: 'Metal Gear 2: Solid Snake',
     },
     {
-      image: 'capas_game/cp3.webp',
+      image: 'src/assets/images/capas_game/cp3.webp',
       title: 'Metal Gear Solid',
     },
     {
-      image: 'capas_game/cp4.webp',
+      image: 'src/assets/images/capas_game/cp4.webp',
       title: 'Metal Gear Solid: Integral',
     },
     {
-      image: 'capas_game/cp5.webp',
+      image: 'src/assets/images/capas_game/cp5.webp',
       title: 'Metal Gear: Solid Snake',
     },
     {
-      image: 'capas_game/cp6.webp',
+      image: 'src/assets/images/capas_game/cp6.webp',
       title: 'Metal Gear Solid 2',
     },
     {
-      image: 'capas_game/cp7.webp',
+      image: 'src/assets/images/capas_game/cp7.webp',
       title: 'Sons of Liberty',
     },
     {
-      image: 'capas_game/cp8.webp',
+      image: 'src/assets/images/capas_game/cp8.webp',
       title: 'Metal Gear Solid 2: Substance',
     },
     {
-      image: 'capas_game/cp9.webp',
+      image: 'src/assets/images/capas_game/cp9.webp',
       title: 'Metal Gear Solid 3: Snake Eater',
     },
     {
-      image: 'capas_game/cp10.webp',
+      image: 'src/assets/images/capas_game/cp10.webp',
       title: 'Metal Gear Solid: Portable Ops',
     },
     {
-      image: 'capas_game/cp11.webp',
+      image: 'src/assets/images/capas_game/cp11.webp',
       title: 'Portable Ops Plus',
     },
     {
